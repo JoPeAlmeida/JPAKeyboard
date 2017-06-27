@@ -17,7 +17,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.Irmaos" />
-        <activity android:name=".activities.AddIrmao"></activity>
+        <activity android:name=".activities.AddIrmao" />
+        <provider android:name=".model.DatabaseProvider"
+            android:authorities="pt.jpa.groupgenerator.model.DatabaseProvider" />
     </application>
 
 </manifest>
