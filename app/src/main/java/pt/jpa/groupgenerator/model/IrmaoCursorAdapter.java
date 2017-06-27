@@ -3,9 +3,12 @@ package pt.jpa.groupgenerator.model;
 import android.content.Context;
 import android.database.Cursor;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import pt.jpa.groupgenerator.R;
@@ -17,13 +20,14 @@ import pt.jpa.groupgenerator.R;
 
 public class IrmaoCursorAdapter extends BaseAdapter {
 
-    Cursor cursor;
-    Context mContext;
-    LayoutInflater inflater;
+    private Cursor cursor;
+    private Context mContext;
+    private LayoutInflater inflater;
+    public int chosenOne = -1;
 
     public IrmaoCursorAdapter(Context context, Cursor c) {
         mContext = context;
-        this.cursor = cursor;
+        this.cursor = c;
         inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
@@ -51,13 +55,24 @@ public class IrmaoCursorAdapter extends BaseAdapter {
         } else {
             holder = (Holder) view.getTag();
         }
-        holder.tvIrmaoName.setText(cursor.getString(cursor.getColumnIndex(cursor.getColumnName(1))));
-        holder.tvIrmaoEmail.setText(cursor.getString(cursor.getColumnIndex(cursor.getColumnName(2))));
-        holder.tvIrmaoPhone.setText(cursor.getString(cursor.getColumnIndex(cursor.getColumnName(3))));
+        holder.tvIrmaoName.setText(cursor.getString(cursor.getColumnIndex(cursor.getColumnName(0))));
+        holder.tvIrmaoEmail.setText(cursor.getString(cursor.getColumnIndex(cursor.getColumnName(1))));
+        holder.tvIrmaoPhone.setText(cursor.getString(cursor.getColumnIndex(cursor.getColumnName(2))));
+        if (position == chosenOne) {
+            ImageButton irmaoDeleteBtn = (ImageButton) view.findViewById(R.id.irmaoDeleteBtn);
+            irmaoDeleteBtn.setVisibility(View.VISIBLE);
+            ImageButton irmaoUpdateBtn = (ImageButton) view.findViewById(R.id.irmaoUpdateBtn);
+            irmaoUpdateBtn.setVisibility(View.VISIBLE);
+        } else {
+            ImageButton irmaoDeleteBtn = (ImageButton) view.findViewById(R.id.irmaoDeleteBtn);
+            irmaoDeleteBtn.setVisibility(View.INVISIBLE);
+            ImageButton irmaoUpdateBtn = (ImageButton) view.findViewById(R.id.irmaoUpdateBtn);
+            irmaoUpdateBtn.setVisibility(View.INVISIBLE);
+        }
         return view;
     }
 
-    class Holder {
+    private class Holder {
         TextView tvIrmaoName, tvIrmaoEmail, tvIrmaoPhone;
     }
 }
