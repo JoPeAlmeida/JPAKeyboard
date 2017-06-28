@@ -13,4 +13,12 @@
         android:gravity="center"
         android:text="Irmãos"/>
 
+    <Button
+        android:id="@+id/btn_main_hist"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Histórico"/>
+
 </LinearLayout>

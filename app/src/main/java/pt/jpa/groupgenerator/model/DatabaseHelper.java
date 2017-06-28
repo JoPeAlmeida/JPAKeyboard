@@ -9,11 +9,11 @@ import android.provider.ContactsContract;
  * Created by sebasi on 26/06/2017.
  */
 
-public class DatabaseHelper extends SQLiteOpenHelper {
+class DatabaseHelper extends SQLiteOpenHelper {
 
     private final Context fContext;
 
-    public DatabaseHelper(Context context) {
+    DatabaseHelper(Context context) {
         super(context, DatabaseContract.DATABASE_NAME, null, DatabaseContract.DATABASE_VERSION);
         fContext = context;
     }

@@ -31,12 +31,12 @@ public final class DatabaseContract {
         static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
     }
 
-    static abstract class Score implements BaseColumns {
+    public static abstract class Score implements BaseColumns {
 
         static final String TABLE_NAME = "Score";
-        static final String COL_IRMAO_ID = "IRMAO_ID";
-        static final String COL_PP = "PP";
-        static final String COL_PA = "PA";
+        public static final String COL_IRMAO_ID = "IRMAO_ID";
+        public static final String COL_PP = "PP";
+        public static final String COL_PA = "PA";
 
         static final String CREATE_TABLE = "CREATE TABLE " +
                 TABLE_NAME + " (" +
@@ -48,13 +48,13 @@ public final class DatabaseContract {
         static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
     }
 
-    static abstract class Historico implements BaseColumns {
+    public static abstract class Historico implements BaseColumns {
 
         static final String TABLE_NAME = "Historico";
-        static final String COL_TYPE = "TYPE";
-        static final String COL_DATE = "DATE";
-        static final String COL_NAME = "NAME";
-        static final String COL_IRMAOS = "IRMAOS";
+        public static final String COL_TYPE = "TYPE";
+        public static final String COL_DATE = "DATE";
+        public static final String COL_NAME = "NAME";
+        public static final String COL_IRMAOS = "IRMAOS";
 
         static final String CREATE_TABLE = "CREATE TABLE " +
                 TABLE_NAME + " (" +

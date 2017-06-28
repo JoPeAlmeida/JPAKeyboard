@@ -23,5 +23,14 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        Button histBtn = (Button) findViewById(R.id.btn_main_hist);
+        histBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), Presencas.class);
+                startActivity(intent);
+            }
+        });
     }
 }

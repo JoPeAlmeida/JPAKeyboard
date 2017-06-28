@@ -23,7 +23,6 @@ import pt.jpa.groupgenerator.R;
 import pt.jpa.groupgenerator.model.DatabaseContract;
 import pt.jpa.groupgenerator.model.DatabaseProvider;
 import pt.jpa.groupgenerator.model.IrmaoCursorAdapter;
-import pt.jpa.groupgenerator.model.IrmaosDAO;
 
 public class Irmaos extends Activity implements LoaderCallbacks<Cursor> {
 
