@@ -35,9 +35,36 @@
         android:maxLines="1"
         android:hint="Telemóvel"
         android:inputType="phone"
-        android:imeOptions="actionDone"/>
+        android:imeOptions="actionNext"/>
+
+    <CheckBox
+        android:id="@+id/cb_irmao_casado"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Casado"/>
+
+    <LinearLayout
+        android:id="@+id/ll_casado"
+        android:visibility="invisible"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="Casado com:" />
+
+        <Spinner
+            android:id="@+id/sp_irmao_spouse"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:imeOptions="actionDone"/>
+    </LinearLayout>
+
     <Button
-        android:id="@+id/addBtn"
+        android:id="@+id/btn_add_irmao_add"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"

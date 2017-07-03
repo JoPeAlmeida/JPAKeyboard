@@ -18,8 +18,14 @@
         </activity>
         <activity android:name=".activities.Irmaos" />
         <activity android:name=".activities.AddIrmao" />
-        <provider android:name=".model.DatabaseProvider"
+
+        <provider
+            android:name=".model.DatabaseProvider"
             android:authorities="pt.jpa.groupgenerator.model.DatabaseProvider" />
+
+        <activity android:name=".activities.Actividades" />
+        <activity android:name=".activities.AddActividade" />
+        <activity android:name=".activities.InspectActividade"></activity>
     </application>
 
 </manifest>

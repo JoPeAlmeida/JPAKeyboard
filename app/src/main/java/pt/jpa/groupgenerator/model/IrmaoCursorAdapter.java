@@ -12,6 +12,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import pt.jpa.groupgenerator.R;
+import pt.jpa.groupgenerator.activities.Irmaos;
 
 
 /**
@@ -40,8 +41,13 @@ public class IrmaoCursorAdapter extends BaseAdapter {
     @Override
     public long getItemId(int position) {return position;}
 
+    public long getCurrentId() {
+        cursor.moveToPosition(chosenOne);
+        return cursor.getLong(cursor.getColumnIndex("_id"));
+    }
+
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         View view = convertView;
         Holder holder;
         cursor.moveToPosition(position);
@@ -55,18 +61,32 @@ public class IrmaoCursorAdapter extends BaseAdapter {
         } else {
             holder = (Holder) view.getTag();
         }
-        holder.tvIrmaoName.setText(cursor.getString(cursor.getColumnIndex(cursor.getColumnName(0))));
-        holder.tvIrmaoEmail.setText(cursor.getString(cursor.getColumnIndex(cursor.getColumnName(1))));
-        holder.tvIrmaoPhone.setText(cursor.getString(cursor.getColumnIndex(cursor.getColumnName(2))));
+        holder.tvIrmaoName.setText(cursor.getString(cursor.getColumnIndex(cursor.getColumnName(1))));
+        holder.tvIrmaoEmail.setText(cursor.getString(cursor.getColumnIndex(cursor.getColumnName(2))));
+        holder.tvIrmaoPhone.setText(cursor.getString(cursor.getColumnIndex(cursor.getColumnName(3))));
+        ImageButton irmaoDeleteBtn = (ImageButton) view.findViewById(R.id.btn_irmao_delete);
+        ImageButton irmaoUpdateBtn = (ImageButton) view.findViewById(R.id.btn_irmao_update);
+        irmaoDeleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mContext instanceof Irmaos) {
+                    ((Irmaos)mContext).onDeleteIrmao(getCurrentId());
+                }
+            }
+        });
+        irmaoUpdateBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mContext instanceof Irmaos) {
+                    ((Irmaos)mContext).onUpdateIrmao(getCurrentId());
+                }
+            }
+        });
         if (position == chosenOne) {
-            ImageButton irmaoDeleteBtn = (ImageButton) view.findViewById(R.id.irmaoDeleteBtn);
             irmaoDeleteBtn.setVisibility(View.VISIBLE);
-            ImageButton irmaoUpdateBtn = (ImageButton) view.findViewById(R.id.irmaoUpdateBtn);
             irmaoUpdateBtn.setVisibility(View.VISIBLE);
         } else {
-            ImageButton irmaoDeleteBtn = (ImageButton) view.findViewById(R.id.irmaoDeleteBtn);
             irmaoDeleteBtn.setVisibility(View.INVISIBLE);
-            ImageButton irmaoUpdateBtn = (ImageButton) view.findViewById(R.id.irmaoUpdateBtn);
             irmaoUpdateBtn.setVisibility(View.INVISIBLE);
         }
         return view;

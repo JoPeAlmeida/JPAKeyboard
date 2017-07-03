@@ -8,7 +8,7 @@ import android.provider.BaseColumns;
 
 public final class DatabaseContract {
 
-    static final  int    DATABASE_VERSION   = 1;
+    static final  int    DATABASE_VERSION   = 2;
     static final  String DATABASE_NAME      = "database.db";
     private static final String TEXT_TYPE          = " TEXT";
     private static final String COMMA_SEP          = ",";
@@ -21,22 +21,25 @@ public final class DatabaseContract {
         public static final String COL_NAME = "NAME";
         public static final String COL_EMAIL = "EMAIL";
         public static final String COL_PHONE = "PHONE";
+        public static final String COL_SPOUSE = "SPOUSE";
 
         static final String CREATE_TABLE = "CREATE TABLE " +
                 TABLE_NAME + " (" +
                 _ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 COL_NAME + " TEXT," +
                 COL_EMAIL + " TEXT," +
-                COL_PHONE + " INTEGER" + " )";
+                COL_PHONE + " INTEGER," +
+                COL_SPOUSE + " INTEGER," +
+                "FOREIGN KEY (" + COL_SPOUSE + " ) REFERENCES " + TABLE_NAME + "(_ID) )";
         static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
     }
 
-    static abstract class Score implements BaseColumns {
+    public static abstract class Score implements BaseColumns {
 
         static final String TABLE_NAME = "Score";
-        static final String COL_IRMAO_ID = "IRMAO_ID";
-        static final String COL_PP = "PP";
-        static final String COL_PA = "PA";
+        public static final String COL_IRMAO_ID = "IRMAO_ID";
+        public static final String COL_PP = "PP";
+        public static final String COL_PA = "PA";
 
         static final String CREATE_TABLE = "CREATE TABLE " +
                 TABLE_NAME + " (" +
@@ -48,13 +51,13 @@ public final class DatabaseContract {
         static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
     }
 
-    static abstract class Historico implements BaseColumns {
+    public static abstract class Historico implements BaseColumns {
 
         static final String TABLE_NAME = "Historico";
-        static final String COL_TYPE = "TYPE";
-        static final String COL_DATE = "DATE";
-        static final String COL_NAME = "NAME";
-        static final String COL_IRMAOS = "IRMAOS";
+        public static final String COL_TYPE = "TYPE";
+        public static final String COL_DATE = "DATE";
+        public static final String COL_NAME = "NAME";
+        public static final String COL_IRMAOS = "IRMAOS";
 
         static final String CREATE_TABLE = "CREATE TABLE " +
                 TABLE_NAME + " (" +
