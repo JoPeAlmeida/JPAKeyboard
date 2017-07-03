@@ -5,25 +5,23 @@ import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import pt.jpa.groupgenerator.R;
 
 /**
- * Created by sebasi on 28/06/2017.
+ * Created by sebasi on 03/07/2017.
  */
 
-public class IrmaoPresencaAdapter extends BaseAdapter {
+public class IrmaoSpouseAdapter extends BaseAdapter {
 
     private Cursor cursor;
     private Context mContext;
     private LayoutInflater inflater;
 
-    public IrmaoPresencaAdapter(Context context, Cursor c) {
+    public IrmaoSpouseAdapter(Context context, Cursor c) {
         mContext = context;
         this.cursor = c;
         inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -40,34 +38,39 @@ public class IrmaoPresencaAdapter extends BaseAdapter {
 
     public Cursor getCursor() {return cursor;}
 
+    public int getSpousePosition(long id) {
+        cursor.moveToFirst();
+        int i = 0;
+        while (!cursor.isAfterLast()) {
+            if (cursor.getLong(cursor.getColumnIndex("_id")) != id) {
+                i++;
+                cursor.moveToNext();
+            }
+            else {
+                return i;
+            }
+        }
+        return 0;
+    }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = convertView;
         Holder holder;
         cursor.moveToPosition(position);
         if (view == null) {
-            view = inflater.inflate(R.layout.single_row_irmao_presenca, parent, false);
+            view = inflater.inflate(android.R.layout.simple_spinner_item, parent, false);
             holder = new Holder();
-            holder.tvIrmaoName = (TextView) view.findViewById(R.id.tv_irmao_presenca);
-            holder.cbIrmaoPresenca = (CheckBox) view.findViewById(R.id.cb_irmao_presenca);
+            holder.tvIrmaoName = (TextView) view.findViewById(android.R.id.text1);
             view.setTag(holder);
         } else {
             holder = (Holder) view.getTag();
         }
         holder.tvIrmaoName.setText(cursor.getString(cursor.getColumnIndex(cursor.getColumnName(1))));
-//        holder.cbIrmaoPresenca.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                CheckBox cb = (CheckBox) v;
-//                cb.toggle();
-//            }
-//        });
-
         return view;
     }
 
     private class Holder {
         TextView tvIrmaoName;
-        CheckBox cbIrmaoPresenca;
     }
 }

@@ -17,9 +17,8 @@ import pt.jpa.groupgenerator.R;
 import pt.jpa.groupgenerator.model.DatabaseContract;
 import pt.jpa.groupgenerator.model.DatabaseProvider;
 import pt.jpa.groupgenerator.model.HistoricoCursorAdapter;
-import pt.jpa.groupgenerator.model.IrmaoCursorAdapter;
 
-public class Presencas extends Activity implements LoaderManager.LoaderCallbacks<Cursor> {
+public class Actividades extends Activity implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private HistoricoCursorAdapter histAdapter;
     private ListView listHist;
@@ -29,7 +28,7 @@ public class Presencas extends Activity implements LoaderManager.LoaderCallbacks
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_presencas);
+        setContentView(R.layout.activity_actividades);
 
 
         listHist = (ListView) findViewById(R.id.list_historico);
@@ -41,7 +40,7 @@ public class Presencas extends Activity implements LoaderManager.LoaderCallbacks
             }
         });
 
-        Button addActvBtn = (Button) findViewById(R.id.addActvBtn);
+        Button addActvBtn = (Button) findViewById(R.id.btn_add_actv);
         addActvBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -55,7 +54,7 @@ public class Presencas extends Activity implements LoaderManager.LoaderCallbacks
     @Override
     public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
         return new CursorLoader(this, DatabaseProvider.HIST_URI,
-                new String[] {DatabaseContract.Historico.COL_NAME,
+                new String[] {"_id", DatabaseContract.Historico.COL_NAME,
                         DatabaseContract.Historico.COL_TYPE,
                         DatabaseContract.Historico.COL_DATE}, null, null, null) {
         };
@@ -86,5 +85,30 @@ public class Presencas extends Activity implements LoaderManager.LoaderCallbacks
 
             getLoaderManager().restartLoader(LOADER_ID, null, this);
         }
+    }
+
+    public void onUpdateActividade(long id) {
+
+    }
+
+    public void onDeleteActividade(long id) {
+        String[] args = { String.valueOf(id) };
+        getContentResolver().delete(DatabaseProvider.HIST_URI, "_id=?", args);
+        getLoaderManager().restartLoader(LOADER_ID, null, this);
+    }
+
+    public void onInspectActividade(long id) {
+        Intent intent = new Intent(this, InspectActividade.class);
+        String[] projection = {DatabaseContract.Historico.COL_NAME, DatabaseContract.Historico.COL_TYPE,
+                DatabaseContract.Historico.COL_DATE, DatabaseContract.Historico.COL_IRMAOS};
+        String[] args = { String.valueOf(id) };
+        Cursor c = getContentResolver().query(DatabaseProvider.HIST_URI, projection, "_id=?", args, null);
+        c.moveToFirst();
+        intent.putExtra("actv_name", c.getString(c.getColumnIndex(DatabaseContract.Historico.COL_NAME)));
+        intent.putExtra("actv_type", c.getString(c.getColumnIndex(DatabaseContract.Historico.COL_TYPE)));
+        intent.putExtra("actv_date", c.getLong(c.getColumnIndex(DatabaseContract.Historico.COL_DATE)));
+        intent.putExtra("actv_irmaos", c.getString(c.getColumnIndex(DatabaseContract.Historico.COL_IRMAOS)));
+        intent.putExtra("actv_id", id);
+        startActivity(intent);
     }
 }

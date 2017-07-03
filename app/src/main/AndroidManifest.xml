@@ -23,8 +23,9 @@
             android:name=".model.DatabaseProvider"
             android:authorities="pt.jpa.groupgenerator.model.DatabaseProvider" />
 
-        <activity android:name=".activities.Presencas" />
-        <activity android:name=".activities.AddActividade"></activity>
+        <activity android:name=".activities.Actividades" />
+        <activity android:name=".activities.AddActividade" />
+        <activity android:name=".activities.InspectActividade"></activity>
     </application>
 
 </manifest>

@@ -98,7 +98,7 @@ public class AddActividade extends Activity implements LoaderCallbacks<Cursor> {
     @Override
     public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
         return new CursorLoader(this, DatabaseProvider.CONTENT_URI,
-                new String[] {DatabaseContract.Irmaos.COL_NAME}, null, null, null) {
+                new String[] {"_id", DatabaseContract.Irmaos.COL_NAME}, null, null, null) {
         };
     }
 
@@ -121,8 +121,10 @@ public class AddActividade extends Activity implements LoaderCallbacks<Cursor> {
         long histDate = c.getTimeInMillis();
 
         ArrayList<Long> alistip = new ArrayList<>();
+        Cursor cursor = ipAdapter.getCursor();
+        cursor.moveToFirst();
         for (int i = 0; i < ipList.getCount(); i++) {
-            long id = ipList.getItemIdAtPosition(i);
+            long id = cursor.getLong(cursor.getColumnIndex("_id"));
             View v = ipList.getChildAt(i);
             CheckBox cb = (CheckBox)v.findViewById(R.id.cb_irmao_presenca);
             if (cb.isChecked()) {

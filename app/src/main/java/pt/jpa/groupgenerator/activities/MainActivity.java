@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button irmaosBtn = (Button) findViewById(R.id.irmaosBtn);
+        Button irmaosBtn = (Button) findViewById(R.id.btn_irmaos);
         irmaosBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         histBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), Presencas.class);
+                Intent intent = new Intent(getApplicationContext(), Actividades.class);
                 startActivity(intent);
             }
         });

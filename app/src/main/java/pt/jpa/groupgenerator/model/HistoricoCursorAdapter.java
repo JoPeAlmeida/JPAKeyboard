@@ -14,6 +14,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import pt.jpa.groupgenerator.R;
+import pt.jpa.groupgenerator.activities.Actividades;
+import pt.jpa.groupgenerator.activities.Irmaos;
 
 /**
  * Created by sebasi on 28/06/2017.
@@ -41,13 +43,18 @@ public class HistoricoCursorAdapter extends BaseAdapter {
     @Override
     public long getItemId(int position) {return position;}
 
+    public long getCurrentId() {
+        cursor.moveToPosition(chosenOne);
+        return cursor.getLong(cursor.getColumnIndex("_id"));
+    }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = convertView;
         Holder holder;
         cursor.moveToPosition(position);
         if (view == null) {
-            view = inflater.inflate(R.layout.single_row_historico, parent, false);
+            view = inflater.inflate(R.layout.single_row_actividade, parent, false);
             holder = new Holder();
             holder.tvHistName = (TextView) view.findViewById(R.id.tv_historico_name);
             holder.tvHistType = (TextView) view.findViewById(R.id.tv_historico_type);
@@ -56,22 +63,47 @@ public class HistoricoCursorAdapter extends BaseAdapter {
         } else {
             holder = (Holder) view.getTag();
         }
-        holder.tvHistName.setText(cursor.getString(cursor.getColumnIndex(cursor.getColumnName(0))));
-        holder.tvHistType.setText(cursor.getString(cursor.getColumnIndex(cursor.getColumnName(1))));
+        holder.tvHistName.setText(cursor.getString(cursor.getColumnIndex(cursor.getColumnName(1))));
+        holder.tvHistType.setText(cursor.getString(cursor.getColumnIndex(cursor.getColumnName(2))));
 
-        long dateTimeMillis = cursor.getLong(cursor.getColumnIndex(cursor.getColumnName(2)));
+        long dateTimeMillis = cursor.getLong(cursor.getColumnIndex(cursor.getColumnName(3)));
 
         holder.tvHistDate.setText(getDateString(dateTimeMillis));
+        ImageButton historicoDeleteBtn = (ImageButton) view.findViewById(R.id.btn_historico_delete);
+        ImageButton historicoUpdateBtn = (ImageButton) view.findViewById(R.id.btn_historico_update);
+        ImageButton historicoInspectBtn = (ImageButton) view.findViewById(R.id.btn_historico_inspect);
+        historicoDeleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mContext instanceof Actividades) {
+                    ((Actividades)mContext).onDeleteActividade(getCurrentId());
+                }
+            }
+        });
+        historicoUpdateBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mContext instanceof Actividades) {
+                    ((Actividades)mContext).onUpdateActividade(getCurrentId());
+                }
+            }
+        });
+        historicoInspectBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mContext instanceof Actividades) {
+                    ((Actividades)mContext).onInspectActividade(getCurrentId());
+                }
+            }
+        });
         if (position == chosenOne) {
-            ImageButton historicoDeleteBtn = (ImageButton) view.findViewById(R.id.btn_historico_delete);
             historicoDeleteBtn.setVisibility(View.VISIBLE);
-            ImageButton historicoUpdateBtn = (ImageButton) view.findViewById(R.id.btn_historico_update);
             historicoUpdateBtn.setVisibility(View.VISIBLE);
+            historicoInspectBtn.setVisibility(View.VISIBLE);
         } else {
-            ImageButton historicoDeleteBtn = (ImageButton) view.findViewById(R.id.btn_historico_delete);
             historicoDeleteBtn.setVisibility(View.INVISIBLE);
-            ImageButton historicoUpdateBtn = (ImageButton) view.findViewById(R.id.btn_historico_update);
             historicoUpdateBtn.setVisibility(View.INVISIBLE);
+            historicoInspectBtn.setVisibility(View.INVISIBLE);
         }
         return view;
     }

@@ -54,4 +54,14 @@
         android:src="@android:drawable/ic_menu_edit"
         android:visibility="invisible"
         android:contentDescription="update button"/>
+    <ImageButton
+        android:id="@+id/btn_historico_inspect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toStartOf="@id/btn_historico_update"
+        android:layout_centerVertical="true"
+        android:background="@null"
+        android:src="@android:drawable/ic_menu_search"
+        android:visibility="invisible"
+        android:contentDescription="inspect button"/>
 </RelativeLayout>

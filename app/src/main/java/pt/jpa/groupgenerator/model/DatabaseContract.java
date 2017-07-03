@@ -8,7 +8,7 @@ import android.provider.BaseColumns;
 
 public final class DatabaseContract {
 
-    static final  int    DATABASE_VERSION   = 1;
+    static final  int    DATABASE_VERSION   = 2;
     static final  String DATABASE_NAME      = "database.db";
     private static final String TEXT_TYPE          = " TEXT";
     private static final String COMMA_SEP          = ",";
@@ -21,13 +21,16 @@ public final class DatabaseContract {
         public static final String COL_NAME = "NAME";
         public static final String COL_EMAIL = "EMAIL";
         public static final String COL_PHONE = "PHONE";
+        public static final String COL_SPOUSE = "SPOUSE";
 
         static final String CREATE_TABLE = "CREATE TABLE " +
                 TABLE_NAME + " (" +
                 _ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 COL_NAME + " TEXT," +
                 COL_EMAIL + " TEXT," +
-                COL_PHONE + " INTEGER" + " )";
+                COL_PHONE + " INTEGER," +
+                COL_SPOUSE + " INTEGER," +
+                "FOREIGN KEY (" + COL_SPOUSE + " ) REFERENCES " + TABLE_NAME + "(_ID) )";
         static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
     }
 
