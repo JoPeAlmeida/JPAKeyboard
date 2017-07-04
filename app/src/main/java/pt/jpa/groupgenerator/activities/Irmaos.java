@@ -10,10 +10,13 @@ import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toolbar;
 
 import pt.jpa.groupgenerator.R;
 import pt.jpa.groupgenerator.model.DatabaseContract;
@@ -41,14 +44,11 @@ public class Irmaos extends Activity implements LoaderCallbacks<Cursor> {
                 irmaoCursorAdapter.notifyDataSetChanged();
             }
         });
-        Button addIrmao = (Button) findViewById(R.id.btn_irmao_add);
-        addIrmao.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onAddIrmao(v);
-            }
-        });
 
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        myToolbar.setTitle("Irmãos");
+        setActionBar(myToolbar);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
         getLoaderManager().initLoader(LOADER_ID, null, this);
     }
 
@@ -70,12 +70,6 @@ public class Irmaos extends Activity implements LoaderCallbacks<Cursor> {
 
     @Override
     public void onLoaderReset(Loader arg0) {
-    }
-
-    public void onAddIrmao(View view) {
-        Intent intent = new Intent(this, AddIrmao.class);
-        intent.putExtra("mode", "ADD");
-        startActivityForResult(intent, ADD_IRMAO_REQUEST_CODE);
     }
 
     public void onUpdateIrmao(long id) {
@@ -108,7 +102,24 @@ public class Irmaos extends Activity implements LoaderCallbacks<Cursor> {
                 .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+
+                        String[] projection = {DatabaseContract.Irmaos.COL_SPOUSE};
                         String[] args = { String.valueOf(thisId) };
+                        Cursor c = getContentResolver().query(DatabaseProvider.CONTENT_URI, projection, "_id=?", args, null);
+                        c.moveToFirst();
+                        long oldSpouseId = -1;
+                        if (!c.isNull(c.getColumnIndex(DatabaseContract.Irmaos.COL_SPOUSE))) {
+                            oldSpouseId = c.getLong(c.getColumnIndex(DatabaseContract.Irmaos.COL_SPOUSE));
+                        }
+                        c.close();
+                        if (oldSpouseId != -1) {
+                            ContentValues values = new ContentValues();
+                            values.putNull(DatabaseContract.Irmaos.COL_SPOUSE);
+                            args = new String[]{String.valueOf(oldSpouseId)};
+                            getContentResolver().update(DatabaseProvider.CONTENT_URI, values, "_id=?", args);
+                        }
+
+                        args = new String[]{ String.valueOf(thisId) };
                         getContentResolver().delete(DatabaseProvider.CONTENT_URI, "_id=?", args);
                         getLoaderManager().restartLoader(LOADER_ID, null, Irmaos.this);
                         dialog.dismiss();
@@ -208,6 +219,27 @@ public class Irmaos extends Activity implements LoaderCallbacks<Cursor> {
             }
 
             getLoaderManager().restartLoader(LOADER_ID, null, this);
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.irmaos_menu, menu);;
+        menu.findItem(R.id.menu_add_irmao).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);;
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_add_irmao:
+                Intent intent = new Intent(this, AddIrmao.class);
+                intent.putExtra("mode", "ADD");
+                startActivityForResult(intent, ADD_IRMAO_REQUEST_CODE);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+
         }
     }
 }

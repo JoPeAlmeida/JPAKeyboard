@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toolbar;
 
 import pt.jpa.groupgenerator.R;
 import pt.jpa.groupgenerator.model.DatabaseContract;
@@ -48,6 +49,11 @@ public class Actividades extends Activity implements LoaderManager.LoaderCallbac
                 startActivityForResult(intent, ENTER_DATA_REQUEST_CODE);
             }
         });
+
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        myToolbar.setTitle("Actividades");
+        setActionBar(myToolbar);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
         getLoaderManager().initLoader(LOADER_ID, null, this);
     }
 

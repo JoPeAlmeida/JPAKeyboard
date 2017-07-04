@@ -1,36 +1,50 @@
 package pt.jpa.groupgenerator.activities;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.app.Activity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toolbar;
 
 import pt.jpa.groupgenerator.R;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button irmaosBtn = (Button) findViewById(R.id.btn_irmaos);
-        irmaosBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        myToolbar.setTitle("Group Generator");
+        setActionBar(myToolbar);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);;
+        menu.findItem(R.id.menu_irmaos).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);;
+        menu.findItem(R.id.menu_actividades).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_irmaos:
                 Intent intent = new Intent(getApplicationContext(), Irmaos.class);
                 startActivity(intent);
-            }
-        });
-
-        Button histBtn = (Button) findViewById(R.id.btn_main_hist);
-        histBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), Actividades.class);
+                return true;
+            case R.id.menu_actividades:
+                intent = new Intent(getApplicationContext(), Actividades.class);
                 startActivity(intent);
-            }
-        });
+            default:
+                return super.onOptionsItemSelected(item);
+
+        }
     }
 }

@@ -16,16 +16,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.Irmaos" />
-        <activity android:name=".activities.AddIrmao" />
+        <activity android:name=".activities.Irmaos"
+            android:parentActivityName=".activities.MainActivity"/>
+        <activity android:name=".activities.AddIrmao"
+            android:parentActivityName=".activities.Irmaos"/>
 
         <provider
             android:name=".model.DatabaseProvider"
             android:authorities="pt.jpa.groupgenerator.model.DatabaseProvider" />
 
-        <activity android:name=".activities.Actividades" />
-        <activity android:name=".activities.AddActividade" />
-        <activity android:name=".activities.InspectActividade"></activity>
+        <activity android:name=".activities.Actividades"
+            android:parentActivityName=".activities.MainActivity"/>
+        <activity android:name=".activities.AddActividade"
+            android:parentActivityName=".activities.Actividades"/>
+        <activity android:name=".activities.InspectActividade"
+            android:parentActivityName=".activities.Actividades"/>
     </application>
 
 </manifest>

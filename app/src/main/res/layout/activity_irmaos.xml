@@ -6,17 +6,13 @@
     android:layout_height="fill_parent"
     android:orientation="vertical"
     tools:context="pt.jpa.groupgenerator.activities.Irmaos">
+
+    <include layout="@layout/toolbar" />
+
     <ListView
         android:id="@+id/list_irmaos"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1">
     </ListView>
-    <Button
-        android:id="@+id/btn_irmao_add"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0"
-        android:layout_marginTop="5dp"
-        android:text="Adicionar Irmão" />
 </LinearLayout>
