@@ -6,7 +6,9 @@
     android:layout_height="fill_parent"
     android:orientation="vertical"
     tools:context="pt.jpa.groupgenerator.activities.AddIrmao">
-    
+
+    <include layout="@layout/toolbar" />
+
     <EditText
         android:id="@+id/et_irmao_name"
         android:layout_width="match_parent"

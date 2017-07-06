@@ -25,7 +25,7 @@ import pt.jpa.groupgenerator.model.IrmaoCursorAdapter;
 import pt.jpa.groupgenerator.model.IrmaoPresencaAdapter;
 import pt.jpa.groupgenerator.model.IrmaoSpouseAdapter;
 
-public class AddIrmao extends Activity implements LoaderCallbacks<Cursor> {
+public class AddIrmao extends BaseActivity implements LoaderCallbacks<Cursor> {
 
     EditText etIrmaoName, etIrmaoEmail, etIrmaoPhone;
     CheckBox cbIrmaoCasado;
@@ -92,6 +92,9 @@ public class AddIrmao extends Activity implements LoaderCallbacks<Cursor> {
                 break;
             default:
         }
+        setToolbar(R.string.toolbar_add_irmao);
+        setActionBar(getToolbar());
+        getActionBar().setDisplayHomeAsUpEnabled(true);
         getLoaderManager().initLoader(LOADER_ID, null, this);
     }
 

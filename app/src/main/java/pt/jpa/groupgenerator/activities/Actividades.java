@@ -8,6 +8,8 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -19,7 +21,7 @@ import pt.jpa.groupgenerator.model.DatabaseContract;
 import pt.jpa.groupgenerator.model.DatabaseProvider;
 import pt.jpa.groupgenerator.model.HistoricoCursorAdapter;
 
-public class Actividades extends Activity implements LoaderManager.LoaderCallbacks<Cursor> {
+public class Actividades extends BaseActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private HistoricoCursorAdapter histAdapter;
     private ListView listHist;
@@ -41,18 +43,9 @@ public class Actividades extends Activity implements LoaderManager.LoaderCallbac
             }
         });
 
-        Button addActvBtn = (Button) findViewById(R.id.btn_add_actv);
-        addActvBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), AddActividade.class);
-                startActivityForResult(intent, ENTER_DATA_REQUEST_CODE);
-            }
-        });
 
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        myToolbar.setTitle("Actividades");
-        setActionBar(myToolbar);
+        setToolbar(R.string.toolbar_actividades);
+        setActionBar(getToolbar());
         getActionBar().setDisplayHomeAsUpEnabled(true);
         getLoaderManager().initLoader(LOADER_ID, null, this);
     }
@@ -116,5 +109,25 @@ public class Actividades extends Activity implements LoaderManager.LoaderCallbac
         intent.putExtra("actv_irmaos", c.getString(c.getColumnIndex(DatabaseContract.Historico.COL_IRMAOS)));
         intent.putExtra("actv_id", id);
         startActivity(intent);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.actividades_menu, menu);;
+        menu.findItem(R.id.menu_add_actividade).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);;
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_add_actividade:
+                Intent intent = new Intent(getApplicationContext(), AddActividade.class);
+                startActivityForResult(intent, ENTER_DATA_REQUEST_CODE);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+
+        }
     }
 }

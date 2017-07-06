@@ -12,16 +12,14 @@ import android.widget.Toolbar;
 
 import pt.jpa.groupgenerator.R;
 
-public class MainActivity extends Activity {
+public class MainActivity extends BaseActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        myToolbar.setTitle("Group Generator");
-        setActionBar(myToolbar);
+        setToolbar(R.string.toolbar_main);
+        setActionBar(getToolbar());
     }
 
     @Override

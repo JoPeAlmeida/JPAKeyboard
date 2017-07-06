@@ -19,8 +19,9 @@ import java.util.Calendar;
 import pt.jpa.groupgenerator.R;
 import pt.jpa.groupgenerator.model.DatabaseContract;
 import pt.jpa.groupgenerator.model.DatabaseProvider;
+import pt.jpa.groupgenerator.utils.DateHelper;
 
-public class InspectActividade extends Activity {
+public class InspectActividade extends BaseActivity {
 
     TextView tvActvName, tvActvType, tvActvDate;
     ListView listActvIrmaos;
@@ -37,9 +38,9 @@ public class InspectActividade extends Activity {
         tvActvType.setText(this.getIntent().getStringExtra("actv_type"));
         tvActvDate = (TextView) findViewById(R.id.tv_actv_date);
 
-        long datemilis = this.getIntent().getLongExtra("actv_date", 0);
+        long dateMillis = this.getIntent().getLongExtra("actv_date", 0);
 
-        tvActvDate.setText(getDateFromMilis(datemilis));
+        tvActvDate.setText(DateHelper.getDateAsString(dateMillis));
         ArrayList<String> ipList = new ArrayList<>();
         try {
             JSONObject json = new JSONObject(this.getIntent().getStringExtra("actv_irmaos"));
@@ -62,6 +63,10 @@ public class InspectActividade extends Activity {
         //listActvIrmaos.addHeaderView((TextView)findViewById(R.id.list_actv_ip_header));
         ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, finalIpList);
         listActvIrmaos.setAdapter(listAdapter);
+
+        setToolbar(R.string.toolbar_inspt_actividade);
+        setActionBar(getToolbar());
+        getActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     private String makePlaceHolders(int lenght) {
@@ -83,10 +88,4 @@ public class InspectActividade extends Activity {
         return list;
     }
 
-    private String getDateFromMilis(long dateMilis) {
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-        Calendar c = Calendar.getInstance();
-        c.setTimeInMillis(dateMilis);
-        return format.format(c.getTime());
-    }
 }

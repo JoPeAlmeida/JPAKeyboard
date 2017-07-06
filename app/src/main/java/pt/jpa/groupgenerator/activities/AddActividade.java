@@ -37,8 +37,9 @@ import pt.jpa.groupgenerator.model.DatabaseContract;
 import pt.jpa.groupgenerator.model.DatabaseProvider;
 import pt.jpa.groupgenerator.model.IrmaoCursorAdapter;
 import pt.jpa.groupgenerator.model.IrmaoPresencaAdapter;
+import pt.jpa.groupgenerator.utils.DateHelper;
 
-public class AddActividade extends Activity implements LoaderCallbacks<Cursor> {
+public class AddActividade extends BaseActivity implements LoaderCallbacks<Cursor> {
 
     EditText etHistName;
     Spinner spHistType;
@@ -92,6 +93,10 @@ public class AddActividade extends Activity implements LoaderCallbacks<Cursor> {
                 cb.callOnClick();
             }
         });
+
+        setToolbar(R.string.toolbar_add_actividade);
+        setActionBar(getToolbar());
+        getActionBar().setDisplayHomeAsUpEnabled(true);
         getLoaderManager().initLoader(LOADER_ID, null, this);
     }
 
@@ -116,9 +121,7 @@ public class AddActividade extends Activity implements LoaderCallbacks<Cursor> {
     public void onAdd(View btnAdd) {
         String histName = etHistName.getText().toString();
         String histType = spHistType.getSelectedItem().toString();
-        Calendar c = Calendar.getInstance();
-        c.set(dpHistDate.getYear(), dpHistDate.getMonth(), dpHistDate.getDayOfMonth());
-        long histDate = c.getTimeInMillis();
+        long histDate = DateHelper.getDateAsMillis(dpHistDate);
 
         ArrayList<Long> alistip = new ArrayList<>();
         Cursor cursor = ipAdapter.getCursor();

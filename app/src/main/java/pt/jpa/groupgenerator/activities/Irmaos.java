@@ -23,7 +23,7 @@ import pt.jpa.groupgenerator.model.DatabaseContract;
 import pt.jpa.groupgenerator.model.DatabaseProvider;
 import pt.jpa.groupgenerator.model.IrmaoCursorAdapter;
 
-public class Irmaos extends Activity implements LoaderCallbacks<Cursor> {
+public class Irmaos extends BaseActivity implements LoaderCallbacks<Cursor> {
 
     private IrmaoCursorAdapter irmaoCursorAdapter;
     private ListView listView;
@@ -45,9 +45,8 @@ public class Irmaos extends Activity implements LoaderCallbacks<Cursor> {
             }
         });
 
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        myToolbar.setTitle("Irmãos");
-        setActionBar(myToolbar);
+        setToolbar(R.string.toolbar_irmaos);
+        setActionBar(getToolbar());
         getActionBar().setDisplayHomeAsUpEnabled(true);
         getLoaderManager().initLoader(LOADER_ID, null, this);
     }

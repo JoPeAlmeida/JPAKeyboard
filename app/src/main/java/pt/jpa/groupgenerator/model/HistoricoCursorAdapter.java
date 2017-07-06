@@ -16,6 +16,7 @@ import java.util.Calendar;
 import pt.jpa.groupgenerator.R;
 import pt.jpa.groupgenerator.activities.Actividades;
 import pt.jpa.groupgenerator.activities.Irmaos;
+import pt.jpa.groupgenerator.utils.DateHelper;
 
 /**
  * Created by sebasi on 28/06/2017.
@@ -68,7 +69,7 @@ public class HistoricoCursorAdapter extends BaseAdapter {
 
         long dateTimeMillis = cursor.getLong(cursor.getColumnIndex(cursor.getColumnName(3)));
 
-        holder.tvHistDate.setText(getDateString(dateTimeMillis));
+        holder.tvHistDate.setText(DateHelper.getDateAsString(dateTimeMillis));
         ImageButton historicoDeleteBtn = (ImageButton) view.findViewById(R.id.btn_historico_delete);
         ImageButton historicoUpdateBtn = (ImageButton) view.findViewById(R.id.btn_historico_update);
         ImageButton historicoInspectBtn = (ImageButton) view.findViewById(R.id.btn_historico_inspect);
@@ -112,10 +113,5 @@ public class HistoricoCursorAdapter extends BaseAdapter {
         TextView tvHistName, tvHistType, tvHistDate;
     }
 
-    private String getDateString(long datetimeMillis) {
-        Calendar c = Calendar.getInstance();
-        c.setTimeInMillis(datetimeMillis);
-        DateFormat sdf = SimpleDateFormat.getDateInstance();
-        return sdf.format(c.getTime());
-    }
+
 }

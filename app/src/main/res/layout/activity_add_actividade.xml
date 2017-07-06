@@ -8,6 +8,8 @@
     android:id="@+id/actv_add_actv"
     tools:context="pt.jpa.groupgenerator.activities.AddActividade">
 
+    <include layout="@layout/toolbar" />
+
     <LinearLayout
         android:focusable="true"
         android:focusableInTouchMode="true"
