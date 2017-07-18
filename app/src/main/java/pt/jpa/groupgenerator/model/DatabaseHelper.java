@@ -18,6 +18,7 @@ class DatabaseHelper extends SQLiteOpenHelper {
         fContext = context;
     }
 
+
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(DatabaseContract.Irmaos.CREATE_TABLE);

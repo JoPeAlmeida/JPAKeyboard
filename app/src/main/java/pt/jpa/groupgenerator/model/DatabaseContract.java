@@ -30,7 +30,7 @@ public final class DatabaseContract {
                 COL_EMAIL + " TEXT," +
                 COL_PHONE + " INTEGER," +
                 COL_SPOUSE + " INTEGER," +
-                "FOREIGN KEY (" + COL_SPOUSE + " ) REFERENCES " + TABLE_NAME + "(_ID) )";
+                "FOREIGN KEY (" + COL_SPOUSE + " ) REFERENCES " + TABLE_NAME + "(_ID) ON DELETE SET NULL )";
         static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
     }
 

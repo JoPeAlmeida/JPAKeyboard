@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -148,7 +149,14 @@ public class Irmaos extends BaseActivity implements LoaderCallbacks<Cursor> {
             if (spouse[0] == 1) {
                 values.put(DatabaseContract.Irmaos.COL_SPOUSE, spouse[1]);
             }
-            getContentResolver().insert(DatabaseProvider.CONTENT_URI, values);
+            Uri uri = getContentResolver().insert(DatabaseProvider.CONTENT_URI, values);
+            String id = uri.getLastPathSegment();
+
+            if (spouse[0] == 1) {
+                updateIrmaoSponse(spouse[1], Long.valueOf(id));
+            }
+
+
 
             getLoaderManager().restartLoader(LOADER_ID, null, this);
         }
@@ -189,36 +197,59 @@ public class Irmaos extends BaseActivity implements LoaderCallbacks<Cursor> {
                 if (!c.isNull(c.getColumnIndex(DatabaseContract.Irmaos.COL_SPOUSE))) {
                     values = new ContentValues();
                     values.putNull(DatabaseContract.Irmaos.COL_SPOUSE);
-                    args = new String[]{ String.valueOf(c.getLong(c.getColumnIndex(DatabaseContract.Irmaos.COL_SPOUSE))) };
+                    args = new String[]{ String.valueOf(oldSpouseId) };
                     getContentResolver().update(DatabaseProvider.CONTENT_URI, values, "_id=?", args);
-                }
 
-                values = new ContentValues();
-                values.put(DatabaseContract.Irmaos.COL_SPOUSE, id);
-                args = new String[]{ String.valueOf(oldSpouseId) };
-                getContentResolver().update(DatabaseProvider.CONTENT_URI, values, "_id=?", args);
+                }
             }
-            else if (spouse[0] == 1){
-
-                projection = new String[]{DatabaseContract.Irmaos.COL_SPOUSE};
-                args = new String[]{ String.valueOf(spouse[1]) };
-                c = getContentResolver().query(DatabaseProvider.CONTENT_URI, projection, "_id=?", args, null);
-                c.moveToFirst();
-                if (!c.isNull(c.getColumnIndex(DatabaseContract.Irmaos.COL_SPOUSE))) {
-                    values = new ContentValues();
-                    values.putNull(DatabaseContract.Irmaos.COL_SPOUSE);
-                    args = new String[]{ String.valueOf(c.getLong(c.getColumnIndex(DatabaseContract.Irmaos.COL_SPOUSE))) };
-                    getContentResolver().update(DatabaseProvider.CONTENT_URI, values, "_id=?", args);
-                }
-
-                values = new ContentValues();
-                values.put(DatabaseContract.Irmaos.COL_SPOUSE, id);
-                args = new String[]{ String.valueOf(spouse[1]) };
-                getContentResolver().update(DatabaseProvider.CONTENT_URI, values, "_id=?", args);
+            if (spouse[0] == 1){
+                updateIrmaoSponse(spouse[1], id);
             }
 
             getLoaderManager().restartLoader(LOADER_ID, null, this);
         }
+    }
+
+    private void updateIrmaoSponse(long irmaoId, long spouseId) {
+
+        String[] projection = {DatabaseContract.Irmaos.COL_SPOUSE};
+        String[] args = { String.valueOf(irmaoId) };
+        Cursor c = getContentResolver().query(DatabaseProvider.CONTENT_URI, projection, "_id=?", args, null);
+        c.moveToFirst();
+        long oldSpouseId = -1;
+        if (!c.isNull(c.getColumnIndex(DatabaseContract.Irmaos.COL_SPOUSE))) {
+            oldSpouseId = c.getLong(c.getColumnIndex(DatabaseContract.Irmaos.COL_SPOUSE));
+        }
+        c.close();
+
+
+        ContentValues values = new ContentValues();
+        if (spouseId == -1) {
+            values.putNull(DatabaseContract.Irmaos.COL_SPOUSE);
+        }
+        else {
+            values.put(DatabaseContract.Irmaos.COL_SPOUSE, spouseId);
+        }
+
+        args = new String[]{ String.valueOf(irmaoId) };
+        getContentResolver().update(DatabaseProvider.CONTENT_URI, values, "_id=?", args);
+
+
+        if (oldSpouseId != -1) {
+
+            projection = new String[]{DatabaseContract.Irmaos.COL_SPOUSE};
+            args = new String[]{ String.valueOf(oldSpouseId) };
+            c = getContentResolver().query(DatabaseProvider.CONTENT_URI, projection, "_id=?", args, null);
+            c.moveToFirst();
+            if (!c.isNull(c.getColumnIndex(DatabaseContract.Irmaos.COL_SPOUSE))) {
+                values = new ContentValues();
+                values.putNull(DatabaseContract.Irmaos.COL_SPOUSE);
+                args = new String[]{ String.valueOf(oldSpouseId) };
+                getContentResolver().update(DatabaseProvider.CONTENT_URI, values, "_id=?", args);
+
+            }
+        }
+
     }
 
     @Override
