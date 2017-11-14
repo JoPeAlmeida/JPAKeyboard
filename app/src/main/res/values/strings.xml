@@ -1,9 +1,5 @@
 <resources>
-    <string name="app_name">GroupGenerator</string>
-    <string name="toolbar_main">Group Generator</string>
-    <string name="toolbar_irmaos">Irmãos</string>
-    <string name="toolbar_add_irmao">Add Irmão</string>
-    <string name="toolbar_actividades">Actividades</string>
-    <string name="toolbar_add_actividade">Add Actividade</string>
-    <string name="toolbar_inspt_actividade">Inspect Actividade</string>
+    <string name="app_name">JPAKeyboard</string>
+    <string name="simple_ime">Simple IME</string>
+    <string name="subtype_en_US">English (US)</string>
 </resources>

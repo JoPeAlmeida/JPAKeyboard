@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="pt.jpa.groupgenerator">
+
+    package="pt.jpa.jpakeyboard">
 
     <application
         android:allowBackup="true"
@@ -9,28 +9,25 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.MainActivity">
+        <service android:name=".SimpleIME"
+            android:label="@string/simple_ime"
+            android:permission="android.permission.BIND_INPUT_METHOD"
+            >
+            <meta-data android:name="android.view.im" android:resource="@xml/method"/>
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.view.InputMethod" />
             </intent-filter>
-        </activity>
-        <activity android:name=".activities.Irmaos"
-            android:parentActivityName=".activities.MainActivity"/>
-        <activity android:name=".activities.AddIrmao"
-            android:parentActivityName=".activities.Irmaos"/>
+        </service>
 
         <provider
-            android:name=".model.DatabaseProvider"
-            android:authorities="pt.jpa.groupgenerator.model.DatabaseProvider" />
-
-        <activity android:name=".activities.Actividades"
-            android:parentActivityName=".activities.MainActivity"/>
-        <activity android:name=".activities.AddActividade"
-            android:parentActivityName=".activities.Actividades"/>
-        <activity android:name=".activities.InspectActividade"
-            android:parentActivityName=".activities.Actividades"/>
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="pt.jpa.jpakeyboard.ime.inputcontent"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"/>
+            </provider>
     </application>
 
 </manifest>

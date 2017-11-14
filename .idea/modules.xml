@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/GroupGenerator.iml" filepath="$PROJECT_DIR$/GroupGenerator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/JPAKeyboard.iml" filepath="$PROJECT_DIR$/JPAKeyboard.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
